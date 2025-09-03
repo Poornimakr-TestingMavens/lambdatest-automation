@@ -39,6 +39,8 @@ export class RegisterPage {
     await this.privacyPolicy.click();
     await this.continueButton.click();
 
-    await expect(this.page.locator("h1")).toHaveText("Your Account Has Been Created!");
+    await expect(this.page.locator("h1")).toHaveText(
+      "Your Account Has Been Created!"
+    );
   }
 }
