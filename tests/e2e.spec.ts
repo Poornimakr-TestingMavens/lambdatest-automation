@@ -7,6 +7,7 @@ test("E2E flow", async ({ page }) => {
   const login = new App.LoginPage(page);
   const cart = new App.CartPage(page);
   const common = new App.CommonPage(page);
+  const cartApi = new App.CartApi();
 
   // Generate user + product test data
   const userData = App.TestDataFactory.generateUser();
@@ -36,4 +37,13 @@ test("E2E flow", async ({ page }) => {
 
   // Step 7: Open cart and validate
   await cart.openCart();
+
+  // Step 8: Clear cart using API
+  await cartApi.init();
+  await cartApi.clearCart();
+  await cartApi.dispose();
+
+  // Step 9: Refresh cart page and assert it's empty
+  await page.reload();
+  await cart.assertCartEmpty();
 });

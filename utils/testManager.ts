@@ -6,6 +6,7 @@ import { LoginPage } from "../pages/loginPage";
 import { CartPage } from "../pages/addToCartPage";
 import { CommonPage } from "../pages/commonPage";
 import { TestDataFactory } from "./faker";
+import { CartApi } from "./CartApi";
 
 export const App = {
   HomePage,
@@ -14,4 +15,5 @@ export const App = {
   CartPage,
   CommonPage,
   TestDataFactory,
+  CartApi,
 };
