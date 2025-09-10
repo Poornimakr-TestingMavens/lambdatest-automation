@@ -1,49 +1,48 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { App } from "../utils/testManager";
 
-test("E2E flow", async ({ page }) => {
-  const home = new App.HomePage(page);
-  const register = new App.RegisterPage(page);
-  const login = new App.LoginPage(page);
-  const cart = new App.CartPage(page);
-  const common = new App.CommonPage(page);
-  const cartApi = new App.CartApi();
+test.describe("E2E Flow - LambdaTest Playground", () => {
+  test("should register, login, add to cart, and clear cart", async ({ page }) => {
+    const app = App(page);
+    const userData = app.TestDataFactory.generateUser();
 
-  // Generate user + product test data
-  const userData = App.TestDataFactory.generateUser();
-//  const productData = TestDataFactory.generateProduct();
+   
+    await app.HomePage.goto();
+    await expect(page).toHaveTitle(/Your Store/);
 
-  // Step 1: Go to homepage
-  await home.goto();
 
-  // Step 2: Register new user
-  await home.clickRegister();
-  await register.registerUser(userData);
+    await app.HomePage.clickRegister();
+    await app.RegisterPage.registerUser(userData);
+    await expect(app.RegisterPage.successHeader).toHaveText(
+      "Your Account Has Been Created!"
+    );
 
-  // Step 3: Logout after register
-  await common.logout();
 
-  // Step 4: Login with same credentials
-  await home.clickLogin();
-  await login.login(userData.email, userData.password);
+    await app.CommonPage.logout();
+    await expect(app.CommonPage.logoutHeader).toHaveText("Account Logout");
 
-  // Step 5: Search for a product
-  await home.assertSearchVisible();
-//  await home.searchProduct(productData.name);
+ 
+    await app.HomePage.clickLogin();
+    await app.LoginPage.login(userData.email, userData.password);
 
-  // Step 6: Add random product to cart
-  const productName = await home.addRandomProductToCart();
-  console.log(` Added to cart: ${productName}`);
+    await expect(app.HomePage.searchBox).toBeVisible();
+    await expect(app.HomePage.searchButton).toBeVisible();
 
-  // Step 7: Open cart and validate
-  await cart.openCart();
+    const productName = await app.HomePage.addRandomProductToCart();
+    await expect(app.HomePage.successAlert).toContainText("Success");
+    console.log(` Added to cart: ${productName}`);
 
-  // Step 8: Clear cart using API
-  await cartApi.init();
-  await cartApi.clearCart();
-  await cartApi.dispose();
+    await app.CartPage.openCart();
 
-  // Step 9: Refresh cart page and assert it's empty
-  await page.reload();
-  await cart.assertCartEmpty();
+    const cartApi = app.CartApi();
+    await cartApi.init();
+    await cartApi.clearCart();
+    await cartApi.dispose();
+
+    await page.reload();
+    await expect(app.CartPage.emptyMessage).toContainText("Your shopping cart is empty");
+  });
 });
+
+
+

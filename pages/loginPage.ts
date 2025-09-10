@@ -5,18 +5,27 @@ export class LoginPage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
+  readonly successHeader: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.emailInput = page.getByRole("textbox", { name: "E-Mail Address" });
-    this.passwordInput = page.getByRole("textbox", { name: "Password" });
+
+    // Login form fields
+    this.emailInput = page.getByLabel("E-Mail Address");
+    this.passwordInput = page.getByLabel("Password");
     this.loginButton = page.getByRole("button", { name: "Login" });
+
+    // Post-login validation
+    this.successHeader = page.locator("h2");
   }
 
+  /**
+   * Logs in with provided credentials
+   */
   async login(email: string, password: string) {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
-    await expect(this.page.locator("h2")).toContainText("My Account");
+    await expect(this.successHeader).toContainText("My Account");
   }
 }

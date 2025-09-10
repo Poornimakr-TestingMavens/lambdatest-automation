@@ -6,7 +6,7 @@ export class CartPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.cartIcon = page.locator(".cart-icon"); // update selector if needed
+    this.cartIcon = page.locator(".cart-icon"); 
   }
 
   async openCart() {
@@ -15,7 +15,7 @@ export class CartPage {
   }
 
   async assertCartEmpty() {
-    // 🔹 update selector if your cart shows empty differently
+   
     const emptyMessage = this.page.locator("div#content p").first();
     await expect(emptyMessage).toContainText("Your shopping cart is empty");
   }

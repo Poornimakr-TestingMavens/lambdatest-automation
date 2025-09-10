@@ -1,7 +1,9 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class RegisterPage {
   readonly page: Page;
+
+  // Registration form fields
   readonly firstName: Locator;
   readonly lastName: Locator;
   readonly email: Locator;
@@ -11,18 +13,32 @@ export class RegisterPage {
   readonly privacyPolicy: Locator;
   readonly continueButton: Locator;
 
+  // Success message
+  readonly successHeader: Locator;
+
   constructor(page: Page) {
     this.page = page;
+
     this.firstName = page.locator("#input-firstname");
     this.lastName = page.locator("#input-lastname");
     this.email = page.locator("#input-email");
     this.telephone = page.locator("#input-telephone");
     this.password = page.locator("#input-password");
     this.confirmPassword = page.locator("#input-confirm");
-    this.privacyPolicy = page.locator('//div[@class="float-right"]');
+
+    // Privacy Policy checkbox (direct input)
+    this.privacyPolicy = page.locator("input[name='agree']");
+
+    // Continue button
     this.continueButton = page.locator("input[value='Continue']");
+
+    // Success header after registration
+    this.successHeader = page.locator("h1");
   }
 
+  /**
+   * Registers a new user
+   */
   async registerUser(user: {
     firstName: string;
     lastName: string;
@@ -36,11 +52,8 @@ export class RegisterPage {
     await this.telephone.fill(user.phone);
     await this.password.fill(user.password);
     await this.confirmPassword.fill(user.password);
-    await this.privacyPolicy.click();
-    await this.continueButton.click();
 
-    await expect(this.page.locator("h1")).toHaveText(
-      "Your Account Has Been Created!"
-    );
+    await this.privacyPolicy.check();
+    await this.continueButton.click();
   }
 }

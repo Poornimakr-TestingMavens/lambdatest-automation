@@ -1,22 +1,28 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class CartPage {
   readonly page: Page;
   readonly cartIcon: Locator;
+  readonly cartHeader: Locator;
+  readonly emptyMessage: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.cartIcon = page.locator(".cart-icon"); // update selector if needed
+
+    // Locator for the cart icon in the header
+    this.cartIcon = page.locator(".cart-icon");
+
+    // Locator for the cart page heading (e.g., "Shopping Cart")
+    this.cartHeader = page.locator("h1");
+
+    // Locator for the empty cart message
+    this.emptyMessage = page.locator("div#content p").first();
   }
 
+  /**
+   * Opens the cart
+   */
   async openCart() {
     await this.cartIcon.click();
-    await expect(this.page.locator("h1")).toContainText("Shopping Cart");
-  }
-
-  async assertCartEmpty() {
-    // 🔹 update selector if your cart shows empty differently
-    const emptyMessage = this.page.locator("div#content p").first();
-    await expect(emptyMessage).toContainText("Your shopping cart is empty");
   }
 }

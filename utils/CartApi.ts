@@ -1,17 +1,17 @@
 import { request, expect, APIRequestContext } from "@playwright/test";
+import { Config } from "./config";
 
 export class CartApi {
   private requestContext!: APIRequestContext;
-  private baseUrl: string = "https://ecommerce-playground.lambdatest.io";
+  private baseUrl: string = Config.baseUrl;
 
   async init() {
     this.requestContext = await request.newContext();
   }
 
   async clearCart() {
-    // 🔹 Adjust endpoint to match your app’s cart API
     const response = await this.requestContext.post(
-      `${this.baseUrl}/index.php?route=checkout/cart/clear`
+      `${this.baseUrl}${Config.cartClearEndpoint}`
     );
     expect(response.ok()).toBeTruthy();
     return response;
