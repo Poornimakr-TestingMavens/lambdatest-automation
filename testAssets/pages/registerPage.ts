@@ -3,7 +3,7 @@ import { Page, Locator } from "@playwright/test";
 export class RegisterPage {
   readonly page: Page;
 
-  // Registration form fields
+
   readonly firstName: Locator;
   readonly lastName: Locator;
   readonly email: Locator;
@@ -13,7 +13,7 @@ export class RegisterPage {
   readonly privacyPolicy: Locator;
   readonly continueButton: Locator;
 
-  // Success message
+  
   readonly successHeader: Locator;
 
   constructor(page: Page) {
@@ -27,7 +27,7 @@ export class RegisterPage {
     this.confirmPassword = page.locator("#input-confirm");
 
     // Privacy Policy checkbox (direct input)
-    this.privacyPolicy = page.locator("input[name='agree']");
+    this.privacyPolicy = page.locator('label[for="input-agree"]');
 
     // Continue button
     this.continueButton = page.locator("input[value='Continue']");
@@ -53,7 +53,7 @@ export class RegisterPage {
     await this.password.fill(user.password);
     await this.confirmPassword.fill(user.password);
 
-    await this.privacyPolicy.check();
+    await this.privacyPolicy.click();
     await this.continueButton.click();
   }
 }

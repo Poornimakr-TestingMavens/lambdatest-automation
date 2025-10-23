@@ -1,18 +1,17 @@
 // testManager.ts
-import { HomePage } from "../pages/homePage";
-import { RegisterPage } from "../pages/registerPage";
-import { LoginPage } from "../pages/loginPage";
-import { CartPage } from "../pages/addToCartPage";
-import { CommonPage } from "../pages/commonPage";
+import { HomePage } from "../testAssets/pages/homePage";
+import { RegisterPage } from "../testAssets/pages/registerPage";
+//import { CartPage } from "../pages/filterPage";
+import { CommonPage } from "../testAssets/pages/commonPage";
 import { TestDataFactory } from "./faker";
 import { CartApi } from "./cartApi";
+import { Page } from "@playwright/test";
 
-export function App(page) {
+export function App(page: Page) {
   return {
     HomePage: new HomePage(page),
     RegisterPage: new RegisterPage(page),
-    LoginPage: new LoginPage(page),
-    CartPage: new CartPage(page),
+    //CartPage: new CartPage(page),
     CommonPage: new CommonPage(page),
     TestDataFactory,
     CartApi: () => new CartApi(), // so you can call app.CartApi()

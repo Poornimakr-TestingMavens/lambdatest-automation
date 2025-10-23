@@ -1,5 +1,5 @@
 import { Page, Locator } from "@playwright/test";
-import { Config } from "../utils/config";
+import { Config } from "../../utils/config";
 
 export class CommonPage {
   readonly page: Page;

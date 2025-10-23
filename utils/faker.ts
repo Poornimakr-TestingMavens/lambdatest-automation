@@ -11,3 +11,6 @@ export class TestDataFactory {
     };
   }
 }
+//a[contains(text(),"Nokia")]
+
+//h3[@class="design-title"]

@@ -1,0 +1,9 @@
+{
+  "Mobiles": ["Apple", "HTC", "LG", "Nokia", "Samsung", "Xiomi"],
+  "Laptops": ["Apple Macbook", "Asus", "HP", "Lenovo"],
+  "Accessories": ["Headphones", "Memory Card", "Mobile cases", "Power bank", "Screenguards"],
+  "Smart Wearable": ["Smart Watch", "Smart band"],
+  "Tablets": ["Apple Ipad"],
+  "Computers": ["Desktop", "Hard disk", "Mouse & Keyboard", "Pen Drive", "Printer"],
+  "Sound System": ["Bluetooth Speaker", "DTH", "Home Audio", "Home Theatre", "SoundBar"]
+}
