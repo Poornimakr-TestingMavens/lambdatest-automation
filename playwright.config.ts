@@ -16,7 +16,7 @@ export default defineConfig({
  * See [https://playwright.dev/docs/test-configuration](https://playwright.dev/docs/test-configuration).
  */
  
-  testDir: 'testAssets/tests',
+  testDir: '/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
  
